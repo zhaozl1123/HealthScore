@@ -13,6 +13,10 @@ public class DegradeScore {
     public double score_attention;
     public double score_abnormal;
     public double score_critical;
+    public double degradeIndex_normal;
+    public double degradeIndex_attention;
+    public double degradeIndex_abnormal;
+    public double degradeIndex_critical;
     public double score;
 
     /**
@@ -24,27 +28,23 @@ public class DegradeScore {
      * </p>
      * <p style="color: black">************************</p>
      *
-     * @param  _normalScore "正常"分值
-     * @param  _attentionScore "注意"分值
-     * @param  _abnormalScore "异常"分值
-     * @param  _criticalScore "严重"分值
-     * @param  _degradeIndex_normal "正常"标准指标劣化度
-     * @param  _degradeIndex_attention "注意"标准指标劣化度
-     * @param  _degradeIndex_abnormal "异常"标准指标劣化度
-     * @param  _degradeIndex_critical "严重"标准指标劣化度
+     * @param  _standardScores 按照["正常","注意","异常","严重"]进行排序的分值,如[100, 80, 60, 40]
+     * @param  _degradeIndexes 按照["正常","注意","异常","严重"]进行排序的指标值,如[0.2， 0.4， 0.6， 0.8]
      * @param  _degradeIndex 使用{@link HealthScore.DegradeIndex#degradeIndex}计算得出的指标劣化度
      */
-    public DegradeScore(double _normalScore, double _attentionScore, double _abnormalScore, double _criticalScore,
-                        double _degradeIndex_normal, double _degradeIndex_attention, double _degradeIndex_abnormal, double _degradeIndex_critical,
-                        double _degradeIndex) {
-        score_normal = _normalScore;
-        score_attention = _attentionScore;
-        score_abnormal = _abnormalScore;
-        score_critical = _criticalScore;
-        membershipDegree_normal = 1 - min(new double[]{max(new double[]{(_degradeIndex - _degradeIndex_normal) / (_degradeIndex_attention - _degradeIndex_normal), 0}), 1});
-        membershipDegree_attention = max(new double[]{min(new double[]{(_degradeIndex - _degradeIndex_normal) / (_degradeIndex_attention - _degradeIndex_normal), (_degradeIndex_abnormal - _degradeIndex) / (_degradeIndex_attention - _degradeIndex_normal)}), 0});
-        membershipDegree_abnormal = max(new double[]{min(new double[]{(_degradeIndex - _degradeIndex_attention) / (_degradeIndex_abnormal - _degradeIndex_attention), (_degradeIndex_critical - _degradeIndex) / (_degradeIndex_abnormal - _degradeIndex_attention)}), 0});
-        membershipDegree_critical = min(new double[]{max(new double[]{(_degradeIndex - _degradeIndex_abnormal) / (_degradeIndex_critical - _degradeIndex_abnormal), 0}), 1});
+    public DegradeScore(double[] _standardScores, double[] _degradeIndexes, double _degradeIndex) {
+        score_normal = _standardScores[0];
+        score_attention = _standardScores[1];
+        score_abnormal = _standardScores[2];
+        score_critical = _standardScores[3];
+        degradeIndex_normal = _degradeIndexes[0];
+        degradeIndex_attention = _degradeIndexes[1];
+        degradeIndex_abnormal = _degradeIndexes[2];
+        degradeIndex_critical = _degradeIndexes[3];
+        membershipDegree_normal = 1 - min(new double[]{max(new double[]{(_degradeIndex - degradeIndex_normal) / (degradeIndex_attention - degradeIndex_normal), 0}), 1});
+        membershipDegree_attention = max(new double[]{min(new double[]{(_degradeIndex - degradeIndex_normal) / (degradeIndex_attention - degradeIndex_normal), (degradeIndex_abnormal - _degradeIndex) / (degradeIndex_attention - degradeIndex_normal)}), 0});
+        membershipDegree_abnormal = max(new double[]{min(new double[]{(_degradeIndex - degradeIndex_attention) / (degradeIndex_abnormal - degradeIndex_attention), (degradeIndex_critical - _degradeIndex) / (degradeIndex_abnormal - degradeIndex_attention)}), 0});
+        membershipDegree_critical = min(new double[]{max(new double[]{(_degradeIndex - degradeIndex_abnormal) / (degradeIndex_critical - degradeIndex_abnormal), 0}), 1});
         score = score_normal * membershipDegree_normal + score_attention * membershipDegree_attention + score_abnormal * membershipDegree_abnormal + score_critical * membershipDegree_critical;
 
     }
@@ -71,8 +71,8 @@ public class DegradeScore {
     }
 
     public static void main(String[] args) {
-        DegradeScore cache = new DegradeScore(100, 70, 50, 30,
-                0.2, 0.4, 0.6, 0.8, 0.371);
+        DegradeScore cache = new DegradeScore(new double[]{100, 70, 50, 30},
+                new double[] {0.2, 0.4, 0.6, 0.8}, 0.371);
         System.out.println(cache.score);
     }
 }

@@ -1,114 +1,42 @@
-import HealthScore.*;
-
 import java.util.Arrays;
+import HealthScore.*;
 
 public class mainTest_shaftSys{
     public static void main(String[] args) {
-
         /*
         * 摆度得分
         * */
         /*上导摆度（峰峰，宽频）*/
-        // 劣化度计算
-        // 根据所需劣化度函数计算劣化度
-        double deg_cent_upperGuideSwing = DegradeIndex.centerOptimized(13, 5, 10, 20, 35);
-        // 根据各劣化度及其参与系数计算指标劣化度
-        double partCoef_cent_upperGuideSwing = 1;  // 中间最优型单调函数的劣化度参与系数
-        double deg_index_upperGuideSwing = DegradeIndex.degradeIndex(deg_cent_upperGuideSwing, partCoef_cent_upperGuideSwing);
-        // 根据指标劣化度计算指标得分
-        DegradeScore degScore_upperGuideSwing_obj = new DegradeScore(100, 70, 50, 30,
-                0.2, 0.4, 0.6, 0.8,
-                deg_index_upperGuideSwing);
-        // 输出
-        System.out.println("上导摆度（峰峰，宽频）:");
-        System.out.printf("\t中间最优型劣化度: %5.5f, 参与系数: %5.5f\n\t劣化度指标值: %5.5f \n",
-                deg_cent_upperGuideSwing, partCoef_cent_upperGuideSwing, deg_index_upperGuideSwing);
-        System.out.printf("\t指标得分: %5.5f\n", degScore_upperGuideSwing_obj.score);
-
+        Method_CalculateDegradeIndex upperGuideSwing_obj = new Method_CalculateDegradeIndex();
+        upperGuideSwing_obj.calculate(50, new String[]{"center"},
+                new double[][][]{{{5, 10, 20, 35}, {1}, {100, 70, 50, 30}, {0.2, 0.4, 0.6, 0.8}}});
+        System.out.printf("上导摆度（峰峰，宽频）,指标得分: %3.2f\n", upperGuideSwing_obj.indexScore);
         /*下导摆度（峰峰，宽频）*/
-        // 劣化度计算
-        // 根据所需劣化度函数计算劣化度
-        double deg_cent_lowerGuideSwing = DegradeIndex.centerOptimized(14, 5, 10, 20, 35);
-        // 根据各劣化度及其参与系数计算指标劣化度
-        double partCoef_cent_lowerGuideSwing = 1;  // 中间最优型单调函数的劣化度参与系数
-        double deg_index_lowerGuideSwing = DegradeIndex.degradeIndex(deg_cent_lowerGuideSwing, partCoef_cent_lowerGuideSwing);
-        // 根据指标劣化度计算指标得分
-        DegradeScore degScore_lowerGuideSwing_obj = new DegradeScore(100, 70, 50, 30,
-                0.2, 0.4, 0.6, 0.8,
-                deg_index_lowerGuideSwing);
-        // 输出
-        System.out.println("下导摆度（峰峰，宽频）:");
-        System.out.printf("\t中间最优型劣化度: %5.5f, 参与系数: %5.5f\n\t劣化度指标值: %5.5f \n",
-                deg_cent_lowerGuideSwing, partCoef_cent_lowerGuideSwing, deg_index_lowerGuideSwing);
-        System.out.printf("\t指标得分: %5.5f\n", degScore_lowerGuideSwing_obj.score);
-
+        Method_CalculateDegradeIndex lowerGuideSwing_obj = new Method_CalculateDegradeIndex();
+        lowerGuideSwing_obj.calculate(33, new String[]{"center"},
+                new double[][][]{{{5, 10, 20, 35}, {1}, {100, 70, 50, 30}, {0.2, 0.4, 0.6, 0.8}}});
+        System.out.printf("下导摆度（峰峰，宽频）,指标得分: %3.2f\n", lowerGuideSwing_obj.indexScore);
         /*水导摆度（峰峰，宽频）*/
-        // 劣化度计算
-        // 根据所需劣化度函数计算劣化度
-        double deg_cent_waterGuideSwing = DegradeIndex.centerOptimized(15, 5, 10, 20, 35);
-        // 根据各劣化度及其参与系数计算指标劣化度
-        double partCoef_cent_waterGuideSwing = 1;  // 中间最优型单调函数的劣化度参与系数
-        double deg_index_waterGuideSwing = DegradeIndex.degradeIndex(deg_cent_waterGuideSwing, partCoef_cent_waterGuideSwing);
-        // 根据指标劣化度计算指标得分
-        DegradeScore degScore_waterGuideSwing_obj = new DegradeScore(100, 70, 50, 30,
-                0.2, 0.4, 0.6, 0.8,
-                deg_index_waterGuideSwing);
-        // 输出
-        System.out.println("水导摆度（峰峰，宽频）:");
-        System.out.printf("\t中间最优型劣化度: %5.5f, 参与系数: %5.5f\n\t劣化度指标值: %5.5f \n",
-                deg_cent_waterGuideSwing, partCoef_cent_waterGuideSwing, deg_index_waterGuideSwing);
-        System.out.printf("\t指标得分: %5.5f\n", degScore_waterGuideSwing_obj.score);
-
+        Method_CalculateDegradeIndex waterGuideSwing_obj = new Method_CalculateDegradeIndex();
+        waterGuideSwing_obj.calculate(33, new String[]{"center"},
+                new double[][][]{{{5, 10, 20, 35}, {1}, {100, 70, 50, 30}, {0.2, 0.4, 0.6, 0.8}}});
+        System.out.printf("水导摆度（峰峰，宽频）,指标得分: %3.2f\n", waterGuideSwing_obj.indexScore);
         /*上导摆度变化率（稳态）*/
-        // 劣化度计算
-        // 根据所需劣化度函数计算劣化度
-        double deg_cent_upperGuideSwingRatio = DegradeIndex.centerOptimized(12, -25, -10, 10, 25);
-        // 根据各劣化度及其参与系数计算指标劣化度
-        double partCoef_cent_upperGuideSwingRatio = 1;  // 中间最优型单调函数的劣化度参与系数
-        double deg_index_upperGuideSwingRatio = DegradeIndex.degradeIndex(deg_cent_upperGuideSwingRatio, partCoef_cent_upperGuideSwingRatio);
-        // 根据指标劣化度计算指标得分
-        DegradeScore degScore_upperGuideSwingRatio_obj = new DegradeScore(100, 70, 50, 30,
-                0.2, 0.4, 0.6, 0.8,
-                deg_index_upperGuideSwingRatio);
-        // 输出
-        System.out.println("上导摆度变化率（稳态）:");
-        System.out.printf("\t中间最优型劣化度: %5.5f, 参与系数: %5.5f\n\t劣化度指标值: %5.5f \n",
-                deg_cent_upperGuideSwingRatio, partCoef_cent_upperGuideSwingRatio, deg_index_upperGuideSwingRatio);
-        System.out.printf("\t指标得分: %5.5f\n", degScore_upperGuideSwingRatio_obj.score);
-
+        Method_CalculateDegradeIndex upperGuideSwingRatio_obj = new Method_CalculateDegradeIndex();
+        upperGuideSwingRatio_obj.calculate(18, new String[]{"center"},
+                new double[][][]{{{-25, -10, 10, 25}, {1}, {100, 70, 50, 30}, {0.2, 0.4, 0.6, 0.8}}});
+        System.out.printf("上导摆度变化率（稳态）,指标得分: %3.2f\n", upperGuideSwingRatio_obj.indexScore);
         /*下导摆度变化率（稳态）*/
-        // 劣化度计算
-        // 根据所需劣化度函数计算劣化度
-        double deg_cent_lowerGuideSwingRatio = DegradeIndex.centerOptimized(8, -25, -10, 10, 25);
-        // 根据各劣化度及其参与系数计算指标劣化度
-        double partCoef_cent_lowerGuideSwingRatio = 1;  // 中间最优型单调函数的劣化度参与系数
-        double deg_index_lowerGuideSwingRatio = DegradeIndex.degradeIndex(deg_cent_lowerGuideSwingRatio, partCoef_cent_lowerGuideSwingRatio);
-        // 根据指标劣化度计算指标得分
-        DegradeScore degScore_lowerGuideSwingRatio_obj = new DegradeScore(100, 70, 50, 30,
-                0.2, 0.4, 0.6, 0.8,
-                deg_index_lowerGuideSwingRatio);
-        // 输出
-        System.out.println("下导摆度变化率（稳态）:");
-        System.out.printf("\t中间最优型劣化度: %5.5f, 参与系数: %5.5f\n\t劣化度指标值: %5.5f \n",
-                deg_cent_lowerGuideSwingRatio, partCoef_cent_lowerGuideSwingRatio, deg_index_lowerGuideSwingRatio);
-        System.out.printf("\t指标得分: %5.5f\n", degScore_lowerGuideSwingRatio_obj.score);
-
+        Method_CalculateDegradeIndex lowerGuideSwingRatio_obj = new Method_CalculateDegradeIndex();
+        lowerGuideSwingRatio_obj.calculate(8, new String[]{"center"},
+                new double[][][]{{{-25, -10, 10, 25}, {1}, {100, 70, 50, 30}, {0.2, 0.4, 0.6, 0.8}}});
+        System.out.printf("下导摆度变化率（稳态）,指标得分: %3.2f\n", lowerGuideSwingRatio_obj.indexScore);
         /*水导摆度变化率（稳态）*/
-        // 劣化度计算
-        // 根据所需劣化度函数计算劣化度
-        double deg_cent_waterGuideSwingRatio = DegradeIndex.centerOptimized(9, -25, -10, 10, 25);
-        // 根据各劣化度及其参与系数计算指标劣化度
-        double partCoef_cent_waterGuideSwingRatio = 1;  // 中间最优型单调函数的劣化度参与系数
-        double deg_index_waterGuideSwingRatio = DegradeIndex.degradeIndex(deg_cent_waterGuideSwingRatio, partCoef_cent_waterGuideSwingRatio);
-        // 根据指标劣化度计算指标得分
-        DegradeScore degScore_waterGuideSwingRatio_obj = new DegradeScore(100, 70, 50, 30,
-                0.2, 0.4, 0.6, 0.8,
-                deg_index_waterGuideSwingRatio);
-        // 输出
-        System.out.println("下导摆度变化率（稳态）:");
-        System.out.printf("\t中间最优型劣化度: %5.5f, 参与系数: %5.5f\n\t劣化度指标值: %5.5f \n",
-                deg_cent_waterGuideSwingRatio, partCoef_cent_waterGuideSwingRatio, deg_index_waterGuideSwingRatio);
-        System.out.printf("\t指标得分: %5.5f\n", degScore_waterGuideSwingRatio_obj.score);
+        Method_CalculateDegradeIndex waterGuideSwingRatio_obj = new Method_CalculateDegradeIndex();
+        waterGuideSwingRatio_obj.calculate(9, new String[]{"center"},
+                new double[][][]{{{-25, -10, 10, 25}, {1}, {100, 70, 50, 30}, {0.2, 0.4, 0.6, 0.8}}});
+        System.out.printf("水导摆度变化率（稳态）,指标得分: %3.2f\n", waterGuideSwingRatio_obj.indexScore);
+
         /*摆度得分*/
         double weight_upperGuideSwing = 0.25;
         double weight_lowerGuideSwing = 0.15;
@@ -117,166 +45,107 @@ public class mainTest_shaftSys{
         double weight_lowerGuideSwingRatio = 0.15;
         double weight_waterGuideSwingRatio = 0.12;
         WeightingScore swing = new WeightingScore(
-                degScore_upperGuideSwing_obj.score, weight_upperGuideSwing,
-                degScore_lowerGuideSwing_obj.score, weight_lowerGuideSwing,
-                degScore_waterGuideSwing_obj.score, weight_waterGuideSwing,
-                degScore_upperGuideSwingRatio_obj.score, weight_upperGuideSwingRatio,
-                degScore_lowerGuideSwingRatio_obj.score, weight_lowerGuideSwingRatio,
-                degScore_waterGuideSwingRatio_obj.score, weight_waterGuideSwingRatio
+                upperGuideSwing_obj.indexScore, weight_upperGuideSwing,
+                lowerGuideSwing_obj.indexScore, weight_lowerGuideSwing,
+                waterGuideSwing_obj.indexScore, weight_waterGuideSwing,
+                upperGuideSwingRatio_obj.indexScore, weight_upperGuideSwingRatio,
+                lowerGuideSwingRatio_obj.indexScore, weight_lowerGuideSwingRatio,
+                waterGuideSwingRatio_obj.indexScore, weight_waterGuideSwingRatio
         );
         System.out.printf("摆度得分: %5.5f\n", swing.score);
         /*摆度各级隶属度*/
-        double[] swing_cache1 = WeightingMembershipCoef.mapReduceMultiply(0.25,
-                degScore_upperGuideSwing_obj.membershipDegree_normal, degScore_upperGuideSwing_obj.membershipDegree_attention,
-                degScore_upperGuideSwing_obj.membershipDegree_abnormal, degScore_upperGuideSwing_obj.membershipDegree_critical);
-        double[] swing_cache2 = WeightingMembershipCoef.mapReduceMultiply(0.15,
-                degScore_lowerGuideSwing_obj.membershipDegree_normal, degScore_lowerGuideSwing_obj.membershipDegree_attention,
-                degScore_lowerGuideSwing_obj.membershipDegree_abnormal, degScore_lowerGuideSwing_obj.membershipDegree_critical);
-        double[] swing_cache3 = WeightingMembershipCoef.mapReduceMultiply(0.15,
-                degScore_waterGuideSwing_obj.membershipDegree_normal, degScore_waterGuideSwing_obj.membershipDegree_attention,
-                degScore_waterGuideSwing_obj.membershipDegree_abnormal, degScore_waterGuideSwing_obj.membershipDegree_critical);
-        double[] swing_cache4 = WeightingMembershipCoef.mapReduceMultiply(0.18,
-                degScore_upperGuideSwingRatio_obj.membershipDegree_normal, degScore_upperGuideSwingRatio_obj.membershipDegree_attention,
-                degScore_upperGuideSwingRatio_obj.membershipDegree_abnormal, degScore_upperGuideSwingRatio_obj.membershipDegree_critical);
-        double[] swing_cache5 = WeightingMembershipCoef.mapReduceMultiply(0.15,
-                degScore_lowerGuideSwingRatio_obj.membershipDegree_normal, degScore_lowerGuideSwingRatio_obj.membershipDegree_attention,
-                degScore_lowerGuideSwingRatio_obj.membershipDegree_abnormal, degScore_lowerGuideSwingRatio_obj.membershipDegree_critical);
-        double[] swing_cache6 = WeightingMembershipCoef.mapReduceMultiply(0.12,
-                degScore_waterGuideSwingRatio_obj.membershipDegree_normal, degScore_waterGuideSwingRatio_obj.membershipDegree_attention,
-                degScore_waterGuideSwingRatio_obj.membershipDegree_abnormal, degScore_waterGuideSwingRatio_obj.membershipDegree_critical);
+        double[] swing_cache1 = WeightingMembershipCoef.mapReduceMultiply(weight_upperGuideSwing,
+                upperGuideSwing_obj.membershipDegree_normal, upperGuideSwing_obj.membershipDegree_attention,
+                upperGuideSwing_obj.membershipDegree_abnormal, upperGuideSwing_obj.membershipDegree_critical);
+        double[] swing_cache2 = WeightingMembershipCoef.mapReduceMultiply(weight_lowerGuideSwing,
+                lowerGuideSwing_obj.membershipDegree_normal, lowerGuideSwing_obj.membershipDegree_attention,
+                lowerGuideSwing_obj.membershipDegree_abnormal, lowerGuideSwing_obj.membershipDegree_critical);
+        double[] swing_cache3 = WeightingMembershipCoef.mapReduceMultiply(weight_waterGuideSwing,
+                waterGuideSwing_obj.membershipDegree_normal, waterGuideSwing_obj.membershipDegree_attention,
+                waterGuideSwing_obj.membershipDegree_abnormal, waterGuideSwing_obj.membershipDegree_critical);
+        double[] swing_cache4 = WeightingMembershipCoef.mapReduceMultiply(weight_upperGuideSwingRatio,
+                upperGuideSwingRatio_obj.membershipDegree_normal, upperGuideSwingRatio_obj.membershipDegree_attention,
+                upperGuideSwingRatio_obj.membershipDegree_abnormal, upperGuideSwingRatio_obj.membershipDegree_critical);
+        double[] swing_cache5 = WeightingMembershipCoef.mapReduceMultiply(weight_lowerGuideSwingRatio,
+                lowerGuideSwingRatio_obj.membershipDegree_normal, lowerGuideSwingRatio_obj.membershipDegree_attention,
+                lowerGuideSwingRatio_obj.membershipDegree_abnormal, lowerGuideSwingRatio_obj.membershipDegree_critical);
+        double[] swing_cache6 = WeightingMembershipCoef.mapReduceMultiply(weight_waterGuideSwingRatio,
+                waterGuideSwingRatio_obj.membershipDegree_normal, waterGuideSwingRatio_obj.membershipDegree_attention,
+                waterGuideSwingRatio_obj.membershipDegree_abnormal, waterGuideSwingRatio_obj.membershipDegree_critical);
         double[] swingMembership = WeightingMembershipCoef.mapReducePlus(swing_cache1, swing_cache2, swing_cache3, swing_cache4, swing_cache5, swing_cache6);
         System.out.println("摆度各评级隶属度: " + Arrays.toString(swingMembership));
+
         /*
         * 振动得分
         * */
         /*上机架水平振动（峰峰，最大）*/
-        // 根据所需劣化度函数计算劣化度
-        double deg_cent_upperFrameVib = DegradeIndex.centerOptimized(7, 0, 6, 9, 12);
-        // 根据各劣化度及其参与系数计算指标劣化度
-        double partCoef_cent_upperFrameVib = 1;  // 中间最优型单调函数的劣化度参与系数
-        double deg_index_upperFrameVib = DegradeIndex.degradeIndex(deg_cent_upperFrameVib, partCoef_cent_upperFrameVib);
-        // 根据指标劣化度计算指标得分
-        DegradeScore degScore_upperFrameVib_obj = new DegradeScore(100, 70, 50, 30,
-                0.2, 0.4, 0.6, 0.8,
-                deg_index_upperFrameVib);
-        // 输出
-        System.out.println("上机架水平振动（峰峰，最大）:");
-        System.out.printf("\t中间最优型劣化度: %5.5f, 参与系数: %5.5f\n\t劣化度指标值: %5.5f \n",
-                deg_cent_upperFrameVib, partCoef_cent_upperFrameVib, deg_index_upperFrameVib);
-        System.out.printf("\t指标得分: %5.5f\n", degScore_upperFrameVib_obj.score);
+        Method_CalculateDegradeIndex upperFrameHoriVib_obj = new Method_CalculateDegradeIndex();
+        upperFrameHoriVib_obj.calculate(7, new String[]{"center"},
+                new double[][][]{{{0, 6, 9, 12}, {1}, {100, 70, 50, 30}, {0.2, 0.4, 0.6, 0.8}}});
+        System.out.printf("上机架水平振动（峰峰，最大）,指标得分: %3.2f\n", upperFrameHoriVib_obj.indexScore);
         /*下机架水平振动（峰峰，最大）*/
-        // 根据所需劣化度函数计算劣化度
-        double deg_cent_lowerFrameVib = DegradeIndex.centerOptimized(5, 0, 4, 9, 12);
-        // 根据各劣化度及其参与系数计算指标劣化度
-        double partCoef_cent_lowerFrameVib = 1;  // 中间最优型单调函数的劣化度参与系数
-        double deg_index_lowerFrameVib = DegradeIndex.degradeIndex(deg_cent_lowerFrameVib, partCoef_cent_lowerFrameVib);
-        // 根据指标劣化度计算指标得分
-        DegradeScore degScore_lowerFrameVib_obj = new DegradeScore(100, 70, 50, 30,
-                0.2, 0.4, 0.6, 0.8,
-                deg_index_lowerFrameVib);
-        // 输出
-        System.out.println("下机架水平振动（峰峰，最大）:");
-        System.out.printf("\t中间最优型劣化度: %5.5f, 参与系数: %5.5f\n\t劣化度指标值: %5.5f \n",
-                deg_cent_lowerFrameVib, partCoef_cent_lowerFrameVib, deg_index_lowerFrameVib);
-        System.out.printf("\t指标得分: %5.5f\n", degScore_lowerFrameVib_obj.score);
+        Method_CalculateDegradeIndex lowerFrameHoriVib_obj = new Method_CalculateDegradeIndex();
+        lowerFrameHoriVib_obj.calculate(5, new String[]{"center"},
+                new double[][][]{{{0, 4, 9, 12}, {1}, {100, 70, 50, 30}, {0.2, 0.4, 0.6, 0.8}}});
+        System.out.printf("下机架水平振动（峰峰，最大）,指标得分: %3.2f\n", lowerFrameHoriVib_obj.indexScore);
         /*顶盖水平振动（峰峰，最大）*/
-        // 根据所需劣化度函数计算劣化度
-        double deg_cent_headCoverVib = DegradeIndex.centerOptimized(6, 0, 5, 9, 35);
-        // 根据各劣化度及其参与系数计算指标劣化度
-        double partCoef_cent_headCoverVib = 1;  // 中间最优型单调函数的劣化度参与系数
-        double deg_index_headCoverVib = DegradeIndex.degradeIndex(deg_cent_headCoverVib, partCoef_cent_headCoverVib);
-        // 根据指标劣化度计算指标得分
-        DegradeScore degScore_headCoverVib_obj = new DegradeScore(100, 70, 50, 30,
-                0.2, 0.4, 0.6, 0.8,
-                deg_index_headCoverVib);
-        // 输出
-        System.out.println("顶盖水平振动（峰峰，最大）:");
-        System.out.printf("\t中间最优型劣化度: %5.5f, 参与系数: %5.5f\n\t劣化度指标值: %5.5f \n",
-                deg_cent_headCoverVib, partCoef_cent_headCoverVib, deg_index_headCoverVib);
-        System.out.printf("\t指标得分: %5.5f\n", degScore_headCoverVib_obj.score);
+        Method_CalculateDegradeIndex headCoverHoriVib_obj = new Method_CalculateDegradeIndex();
+        headCoverHoriVib_obj.calculate(6, new String[]{"center"},
+                new double[][][]{{{0, 5, 9, 35}, {1}, {100, 70, 50, 30}, {0.2, 0.4, 0.6, 0.8}}});
+        System.out.printf("顶盖水平振动（峰峰，最大）,指标得分: %3.2f\n", headCoverHoriVib_obj.indexScore);
         /*上机架垂直振动（峰峰，最大）*/
-        // 根据所需劣化度函数计算劣化度
-        double deg_cent_upperFrameVerVib = DegradeIndex.centerOptimized(5, 0, 3, 7, 25);
-        // 根据各劣化度及其参与系数计算指标劣化度
-        double partCoef_cent_upperFrameVerVib = 1;  // 中间最优型单调函数的劣化度参与系数
-        double deg_index_upperFrameVerVib = DegradeIndex.degradeIndex(deg_cent_upperFrameVerVib, partCoef_cent_upperFrameVerVib);
-        // 根据指标劣化度计算指标得分
-        DegradeScore degScore_upperFrameVerVib_obj = new DegradeScore(100, 70, 50, 30,
-                0.2, 0.4, 0.6, 0.8,
-                deg_index_upperFrameVerVib);
-        // 输出
-        System.out.println("上机架垂直振动（峰峰，最大）:");
-        System.out.printf("\t中间最优型劣化度: %5.5f, 参与系数: %5.5f\n\t劣化度指标值: %5.5f \n",
-                deg_cent_upperFrameVerVib, partCoef_cent_upperFrameVerVib, deg_index_upperFrameVerVib);
-        System.out.printf("\t指标得分: %5.5f\n", degScore_upperFrameVerVib_obj.score);
+        Method_CalculateDegradeIndex upperFrameVertVib_obj = new Method_CalculateDegradeIndex();
+        upperFrameVertVib_obj.calculate(5, new String[]{"center"},
+                new double[][][]{{{0, 3, 7, 25}, {1}, {100, 70, 50, 30}, {0.2, 0.4, 0.6, 0.8}}});
+        System.out.printf("上机架垂直振动（峰峰，最大）,指标得分: %3.2f\n", upperFrameVertVib_obj.indexScore);
         /*下机架垂直振动（峰峰，最大）*/
-        // 根据所需劣化度函数计算劣化度
-        double deg_cent_lowerFrameVerVib = DegradeIndex.centerOptimized(4, 0, 3, 7, 12);
-        // 根据各劣化度及其参与系数计算指标劣化度
-        double partCoef_cent_lowerFrameVerVib = 1;  // 中间最优型单调函数的劣化度参与系数
-        double deg_index_lowerFrameVerVib = DegradeIndex.degradeIndex(deg_cent_lowerFrameVerVib, partCoef_cent_lowerFrameVerVib);
-        // 根据指标劣化度计算指标得分
-        DegradeScore degScore_lowerFrameVerVib_obj = new DegradeScore(100, 70, 50, 30,
-                0.2, 0.4, 0.6, 0.8,
-                deg_index_lowerFrameVerVib);
-        // 输出
-        System.out.println("下机架垂直振动（峰峰，最大）:");
-        System.out.printf("\t中间最优型劣化度: %5.5f, 参与系数: %5.5f\n\t劣化度指标值: %5.5f \n",
-                deg_cent_lowerFrameVerVib, partCoef_cent_lowerFrameVerVib, deg_index_lowerFrameVerVib);
-        System.out.printf("\t指标得分: %5.5f\n", degScore_lowerFrameVerVib_obj.score);
+        Method_CalculateDegradeIndex lowerFrameVertVib_obj = new Method_CalculateDegradeIndex();
+        lowerFrameVertVib_obj.calculate(4, new String[]{"center"},
+                new double[][][]{{{0, 3, 7, 12}, {1}, {100, 70, 50, 30}, {0.2, 0.4, 0.6, 0.8}}});
+        System.out.printf("下机架垂直振动（峰峰，最大）,指标得分: %3.2f\n", lowerFrameVertVib_obj.indexScore);
         /*顶盖垂直振动（峰峰）*/
-        // 根据所需劣化度函数计算劣化度
-        double deg_cent_headCoverVerVib = DegradeIndex.centerOptimized(13, 0, 3, 7, 25);
-        // 根据各劣化度及其参与系数计算指标劣化度
-        double partCoef_cent_headCoverVerVib = 1;  // 中间最优型单调函数的劣化度参与系数
-        double deg_index_headCoverVerVib = DegradeIndex.degradeIndex(deg_cent_headCoverVerVib, partCoef_cent_headCoverVerVib);
-        // 根据指标劣化度计算指标得分
-        DegradeScore degScore_headCoverVerVib_obj = new DegradeScore(100, 70, 50, 30,
-                0.2, 0.4, 0.6, 0.8,
-                deg_index_headCoverVerVib);
-        // 输出
-        System.out.println("顶盖垂直振动（峰峰）:");
-        System.out.printf("\t中间最优型劣化度: %5.5f, 参与系数: %5.5f\n\t劣化度指标值: %5.5f \n",
-                deg_cent_headCoverVerVib, partCoef_cent_headCoverVerVib, deg_index_headCoverVerVib);
-        System.out.printf("\t指标得分: %5.5f\n", degScore_headCoverVerVib_obj.score);
+        Method_CalculateDegradeIndex headCoverVertVib_obj = new Method_CalculateDegradeIndex();
+        headCoverVertVib_obj.calculate(15, new String[]{"center"},
+                new double[][][]{{{0, 3, 7, 25}, {1}, {100, 70, 50, 30}, {0.2, 0.4, 0.6, 0.8}}});
+        System.out.printf("顶盖垂直振动（峰峰）,指标得分: %3.2f\n", headCoverVertVib_obj.indexScore);
         /*振动得分*/
-        double weight_upperFrameVib = 0.25;
-        double weight_lowerFrameVib = 0.15;
-        double weight_headCoverVib = 0.15;
-        double weight_upperFrameVerVib = 0.12;
-        double weight_lowerFrameVerVib = 0.18;
-        double weight_headCoverVerVib = 0.15;
+        double weight_upperFrameHoriVib = 0.25;
+        double weight_lowerFrameHoriVib = 0.15;
+        double weight_headCoverHoriVib = 0.15;
+        double weight_upperFrameVertVib = 0.12;
+        double weight_lowerFrameVertVib = 0.18;
+        double weight_headCoverVertVib = 0.15;
         WeightingScore vibration = new WeightingScore(
-                degScore_upperFrameVib_obj.score, weight_upperFrameVib,
-                degScore_lowerFrameVib_obj.score, weight_lowerFrameVib,
-                degScore_headCoverVib_obj.score, weight_headCoverVib,
-                degScore_upperFrameVerVib_obj.score, weight_upperFrameVerVib,
-                degScore_lowerFrameVerVib_obj.score, weight_lowerFrameVerVib,
-                degScore_headCoverVerVib_obj.score, weight_headCoverVerVib
+                upperFrameHoriVib_obj.indexScore, weight_upperFrameHoriVib,
+                lowerFrameHoriVib_obj.indexScore, weight_lowerFrameHoriVib,
+                headCoverHoriVib_obj.indexScore, weight_headCoverHoriVib,
+                upperFrameVertVib_obj.indexScore, weight_upperFrameVertVib,
+                lowerFrameVertVib_obj.indexScore, weight_lowerFrameVertVib,
+                headCoverVertVib_obj.indexScore, weight_headCoverVertVib
         );
         System.out.printf("振动得分: %5.5f\n", vibration.score);
-
         /*振动各级隶属度*/
-        double[] vib_cache1 = WeightingMembershipCoef.mapReduceMultiply(0.25,
-                degScore_upperFrameVib_obj.membershipDegree_normal, degScore_upperFrameVib_obj.membershipDegree_attention,
-                degScore_upperFrameVib_obj.membershipDegree_abnormal, degScore_upperFrameVib_obj.membershipDegree_critical);
-        double[] vib_cache2 = WeightingMembershipCoef.mapReduceMultiply(0.15,
-                degScore_lowerFrameVib_obj.membershipDegree_normal, degScore_lowerFrameVib_obj.membershipDegree_attention,
-                degScore_lowerFrameVib_obj.membershipDegree_abnormal, degScore_lowerFrameVib_obj.membershipDegree_critical);
-        double[] vib_cache3 = WeightingMembershipCoef.mapReduceMultiply(0.15,
-                degScore_headCoverVib_obj.membershipDegree_normal, degScore_headCoverVib_obj.membershipDegree_attention,
-                degScore_headCoverVib_obj.membershipDegree_abnormal, degScore_headCoverVib_obj.membershipDegree_critical);
-        double[] vib_cache4 = WeightingMembershipCoef.mapReduceMultiply(0.12,
-                degScore_upperFrameVerVib_obj.membershipDegree_normal, degScore_upperFrameVerVib_obj.membershipDegree_attention,
-                degScore_upperFrameVerVib_obj.membershipDegree_abnormal, degScore_upperFrameVerVib_obj.membershipDegree_critical);
-        double[] vib_cache5 = WeightingMembershipCoef.mapReduceMultiply(0.18,
-                degScore_lowerFrameVerVib_obj.membershipDegree_normal, degScore_lowerFrameVerVib_obj.membershipDegree_attention,
-                degScore_lowerFrameVerVib_obj.membershipDegree_abnormal, degScore_lowerFrameVerVib_obj.membershipDegree_critical);
-        double[] vib_cache6 = WeightingMembershipCoef.mapReduceMultiply(0.15,
-                degScore_headCoverVerVib_obj.membershipDegree_normal, degScore_headCoverVerVib_obj.membershipDegree_attention,
-                degScore_headCoverVerVib_obj.membershipDegree_abnormal, degScore_headCoverVerVib_obj.membershipDegree_critical);
+        double[] vib_cache1 = WeightingMembershipCoef.mapReduceMultiply(weight_upperFrameHoriVib,
+                upperFrameHoriVib_obj.membershipDegree_normal, upperFrameHoriVib_obj.membershipDegree_attention,
+                upperFrameHoriVib_obj.membershipDegree_abnormal, upperFrameHoriVib_obj.membershipDegree_critical);
+        double[] vib_cache2 = WeightingMembershipCoef.mapReduceMultiply(weight_lowerFrameHoriVib,
+                lowerFrameHoriVib_obj.membershipDegree_normal, lowerFrameHoriVib_obj.membershipDegree_attention,
+                lowerFrameHoriVib_obj.membershipDegree_abnormal, lowerFrameHoriVib_obj.membershipDegree_critical);
+        double[] vib_cache3 = WeightingMembershipCoef.mapReduceMultiply(weight_headCoverHoriVib,
+                headCoverHoriVib_obj.membershipDegree_normal, headCoverHoriVib_obj.membershipDegree_attention,
+                headCoverHoriVib_obj.membershipDegree_abnormal, headCoverHoriVib_obj.membershipDegree_critical);
+        double[] vib_cache4 = WeightingMembershipCoef.mapReduceMultiply(weight_upperFrameVertVib,
+                upperFrameVertVib_obj.membershipDegree_normal, upperFrameVertVib_obj.membershipDegree_attention,
+                upperFrameVertVib_obj.membershipDegree_abnormal, upperFrameVertVib_obj.membershipDegree_critical);
+        double[] vib_cache5 = WeightingMembershipCoef.mapReduceMultiply(weight_lowerFrameVertVib,
+                lowerFrameVertVib_obj.membershipDegree_normal, lowerFrameVertVib_obj.membershipDegree_attention,
+                lowerFrameVertVib_obj.membershipDegree_abnormal, lowerFrameVertVib_obj.membershipDegree_critical);
+        double[] vib_cache6 = WeightingMembershipCoef.mapReduceMultiply(weight_headCoverVertVib,
+                headCoverVertVib_obj.membershipDegree_normal, headCoverVertVib_obj.membershipDegree_attention,
+                headCoverVertVib_obj.membershipDegree_abnormal, headCoverVertVib_obj.membershipDegree_critical);
         double[] vibMembership = WeightingMembershipCoef.mapReducePlus(vib_cache1, vib_cache2, vib_cache3, vib_cache4, vib_cache5, vib_cache6);
         System.out.println("振动各评级隶属度: " + Arrays.toString(vibMembership));
+
 
         /*
             轴系稳定性指标得分值
@@ -285,7 +154,6 @@ public class mainTest_shaftSys{
         double[] vibration_cache = WeightingMembershipCoef.mapReduceMultiply(0.4, vibMembership);
         double[] shaftMembership = WeightingMembershipCoef.mapReducePlus(swing_cache, vibration_cache);
         System.out.println("轴系稳定性各评级隶属度: " + Arrays.toString(shaftMembership));
-
         /*
             水轮发电机指标得分值
         */
