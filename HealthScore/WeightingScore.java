@@ -1,5 +1,7 @@
 package HealthScore;
 
+import java.util.Arrays;
+
 /**
  * 参见{@link HealthScore.WeightingScore#WeightingScore}  
  */
@@ -27,6 +29,15 @@ public class WeightingScore {
                 score = score + args[i-1] * args[i];
             }
         }
+    }
+    public WeightingScore(double[] _scores_and_weights){
+        int length = _scores_and_weights.length;
+        double res = 0;
+        for (int i=0; i<length/2; i++){
+            res += _scores_and_weights[2*i]*_scores_and_weights[2*i+1];
+        }
+        score = res;
+
     }
 
     public static void main(String[] args) {

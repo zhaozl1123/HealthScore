@@ -1,15 +1,19 @@
 package HealthScore;
 
-
 /**
- * <p style="color: black">************************</p>
- * <p style="color: black">
- * 主要功能：<br>
- * 1.使用单调函数（越小越优型劣化度函数{@link HealthScore.DegradeIndex#monotonic}）计算劣化度；<br>
- * 2.使用非单调函数（中间最优型劣化度函数{@link HealthScore.DegradeIndex#centerOptimized}）计算劣化度；<br>
- * 3.使用一种或多种劣化度函数及其各自的参与系数计算指标劣化度。<br>
- * </p>
- * <p style="color: black">************************</p>
+ * Methods                                                                                                          <br>
+ * ----------                                                                                                       <br>
+ * * {@link HealthScore.DegradeIndex#monotonic(double, double, double)}                                             <br>
+ * * {@link HealthScore.DegradeIndex#centerOptimized(double, double, double, double, double)}                       <br>
+ * * {@link HealthScore.DegradeIndex#degradeIndex(double, double)}                                                  <br>
+ * * {@link HealthScore.DegradeIndex#findMaxValueInArray(double[])}                                                 <br>
+ * * {@link HealthScore.DegradeIndex#findMinValueInArray(double[])}                                                 <br>
+ *
+ * 主要功能                                                                                                          <br>
+ * ----------                                                                                                       <br>
+ * 1.劣化度函数库                                                                                                     <br>
+ * 2.使用一种或多种劣化度函数及其各自的参与系数计算指标劣化度                                                                  <br>
+ * 3.单劣化度函数的劣化度与参与系数的计算                                                                                  <br>
  */
 public class DegradeIndex {
     
@@ -19,35 +23,18 @@ public class DegradeIndex {
     /**
      * 返回“使用单调函数表达劣化度的变量”的劣化度
      *
-     * <p style="color: black">************************</p>
-     * <p style="color: black">
-     *     1.在degradeIndex方法中，可以指定本劣化度的【参与系数】；
-     *     2.通过计算该测点使用其它劣化度函数，如centerOptimized，并指定其参与系数，可以使用degradeIndex方法计算使用多种劣化度函数
-     *     的情况下，该测点的【指标劣化度】
-     * </p>
-     * <p style="color: black">************************</p>
-     *
      * @param _measured 实测值
      * @param _optimalValue 最优值
      * @param _upperLimit 上限
      * @return double 劣化度（非"指标劣化度"）
      */
     public static double monotonic(double _measured, double _optimalValue, double _upperLimit) {
-        double k = 1 / (_upperLimit - _optimalValue);
-        double b = 1 - k * _upperLimit;
-        return k * _measured + b;
+        double cache = findMaxValueInArray(new double[]{(_measured - _optimalValue) / (_upperLimit - _optimalValue), 0});
+        return findMinValueInArray(new double[]{cache, 1});
     }
 
     /**
      * 返回“使用中间最优函数表达劣化度的变量”的劣化度
-     *
-     * <p style="color: black">************************</p>
-     * <p style="color: black">
-     *     1.在degradeIndex方法中，可以指定本劣化度的【参与系数】；
-     *     2.通过计算该测点使用其它劣化度函数，如monotonic，并指定其参与系数，可以使用degradeIndex方法计算使用多种劣化度函数
-     *     的情况下，该测点的【指标劣化度】
-     * </p>
-     * <p style="color: black">************************</p>
      *
      * @param _measured 实测值
      * @param _lowerLimit 下限
@@ -98,35 +85,20 @@ public class DegradeIndex {
     }
 
     /**
-     * 计算使用多种劣化度函数的情况下，结合其各自的参与系数以计算指标劣化度
-     *
-     * <p style="color: black">************************</p>
-     * <p style="color: black">
-     *     1.劣化度与参与系数应当成对输入；<br>
-     *     2.至少应输入一组(劣化度, 参与系数)<br>
-     * </p>
-     * <p style="color: black">************************</p>
+     * 根据单个劣化度及其参与系数计算其指标劣化度
      *
      * @param  _degradeValue 劣化度函数的输出
      * @param  _participateCoef 参与系数
      * @return  double 指标劣化度
      */
-    public static double degradeIndex(double _degradeValue, double _participateCoef, double ..._args){
-        double _cache = 0;
-        if (_args.length >= 2){
-            for (int i=1; i<=_args.length-1; i++){
-                _cache = _cache + _args[i-1] * _args[i];
-            }
-        }
-        return _degradeValue * _participateCoef + _cache;
-
+    public static double degradeIndex(double _degradeValue, double _participateCoef){
+        return _degradeValue * _participateCoef;
     }
 
     public static void main(String[] args) {
         double measuredValue = 17.1;
         double degrade_monotonic = monotonic(measuredValue, 16, 20);
-        double degrade_centerOptimized = centerOptimized(measuredValue, 25, 30, 40, 45);
-        double a = degradeIndex(degrade_monotonic, 0.5, degrade_centerOptimized, 1);
+        double a = degradeIndex(degrade_monotonic, 0.5);
         System.out.println(a);
     }
 }

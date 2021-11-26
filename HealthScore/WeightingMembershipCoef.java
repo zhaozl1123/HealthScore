@@ -1,6 +1,8 @@
 package HealthScore;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 用以进行针对多个子系统所对应的隶属度向上一级系统所对应的隶属度的转化，转化过程需要赋予各子系统所对应的权重系数<br>
@@ -54,11 +56,26 @@ public class WeightingMembershipCoef {
         }
         return res;
     }
+//    public static double[] mapReducePlus(double[][] arrays) {
+//        int arrayQuant = arrays.length;
+//        int arrayLength = arrays[0].length;
+//
+//        double[] res = new double[arrayLength];
+//        Arrays.fill(res, 0.0);
+//
+//        for (int i=0;i<arrayQuant;i++){
+//            double[] array = arrays[i];
+//            for (int j=0;j<arrayLength;j++){
+//                res[j] = res[j] + array[j];
+//            }
+//        }
+//        return res;
+//    }
 
     public static void main(String[] args) {
         double[] cache1 = mapReduceMultiply(0.6, 1, 0, 0, 0);
         double[] cache2 = mapReduceMultiply(0.4, 0, 0.396, 0.604, 0);
-        double[] cache3 = mapReducePlus(cache1, cache2);
-        System.out.println(Arrays.toString(cache1) + ", " + Arrays.toString(cache2) + ", " + Arrays.toString(cache3));
+//        double[] cache3 = mapReducePlus(cache1, cache2);
+//        System.out.println(Arrays.toString(cache1) + ", " + Arrays.toString(cache2) + ", " + Arrays.toString(cache3));
     }
 }

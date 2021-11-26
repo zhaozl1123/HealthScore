@@ -7,15 +7,29 @@ public class mainTest_turbineGen {
         /*
             气隙最小值平均
         */
+        DegradeFunctionParams monoParam_airGapMiniAvg = new DegradeFunctionParams();
+        monoParam_airGapMiniAvg.setMethodName("monotonic");
+        monoParam_airGapMiniAvg.setExpressionParams(new double[]{24, 32});
+        monoParam_airGapMiniAvg.setParticipateCoef(0);
+
+        DegradeFunctionParams centParam_airGapMiniAvg = new DegradeFunctionParams();
+        centParam_airGapMiniAvg.setMethodName("center");
+        centParam_airGapMiniAvg.setExpressionParams(new double[]{24, 28, 30, 34});
+        centParam_airGapMiniAvg.setParticipateCoef(1);
+
+        double[] standardScores = new double[]{100, 70, 50, 30};
+        double[] degradeIndexes = new double[]{0.2, 0.4, 0.6, 0.8};
+
         Method_CalculateDegradeIndex airGapMiniAvg_obj = new Method_CalculateDegradeIndex();
-        airGapMiniAvg_obj.calculate(28.8, new String[]{"monotonic", "center"},
-                new double[][][]{{{24, 32}, {0.1}, {100, 70, 50, 30}, {0.2, 0.4, 0.6, 0.8}}, {{24, 28, 30, 34}, {1}, {100, 70, 50, 30}, {0.2, 0.4, 0.6, 0.8}}});
+        airGapMiniAvg_obj.calculate(80, standardScores, degradeIndexes,
+                monoParam_airGapMiniAvg, centParam_airGapMiniAvg);
         System.out.printf("气隙最小值平均,指标得分: %3.2f\n", airGapMiniAvg_obj.indexScore);
+
         /*
             气隙最小值偏差
         */
         Method_CalculateDegradeIndex airGapMiniBias_obj = new Method_CalculateDegradeIndex();
-        airGapMiniBias_obj.calculate(1, new String[]{"monotonic"},
+        airGapMiniBias_obj.calculate(0.5, new String[]{"monotonic"},
                 new double[][][]{{{0, 0.96}, {1}, {100, 70, 50, 30}, {0.2, 0.4, 0.6, 0.8}}});
         System.out.printf("气隙最小值偏差,指标得分: %3.2f\n", airGapMiniBias_obj.indexScore);
         /*
@@ -43,7 +57,7 @@ public class mainTest_turbineGen {
             集电环罩温度（平均值）
         */
         Method_CalculateDegradeIndex collectorCover_obj = new Method_CalculateDegradeIndex();
-        collectorCover_obj.calculate(1, new String[]{"monotonic"},
+        collectorCover_obj.calculate(39, new String[]{"monotonic"},
                 new double[][][]{{{30, 80}, {1}, {100, 70, 50, 30}, {0.2, 0.4, 0.6, 0.8}}});
         System.out.printf("集电环罩温度（平均值）,指标得分: %3.2f\n", collectorCover_obj.indexScore);
         // 集电系统得分
